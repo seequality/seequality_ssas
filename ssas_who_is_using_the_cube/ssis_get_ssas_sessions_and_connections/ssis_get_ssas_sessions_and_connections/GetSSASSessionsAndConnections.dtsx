@@ -1,0 +1,2066 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="7/25/2017 10:03:12 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="MT-LPT-0334"
+  DTS:CreatorName="BETSSON\sldr01"
+  DTS:DTSID="{B220A2E0-3078-4B42-8DF3-CCF50EDFFCAF}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="12.0.4100.1"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="GetSSASSessionsAndConnections"
+  DTS:PackageType="5"
+  DTS:VersionBuild="13"
+  DTS:VersionGUID="{2C17E3BB-604A-4095-A13C-968126033544}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[destination_database]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{76C44A5B-618C-4720-8C63-133CEF530B48}"
+      DTS:ObjectName="destination_database">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=.\sql2016;Initial Catalog=Test;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[source_ssas]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{FCA6FB46-3CB3-4C88-9AD6-4F18F112E282}"
+      DTS:ObjectName="source_ssas">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=.\sql2016;Initial Catalog=AdventureWorksDW2014Multidimensional-EE;Provider=MSOLAP.5;Integrated Security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{B3A61A47-7E4D-4DED-957F-E3E59B96A80D}"
+      DTS:ObjectName="destination_database_connection_string">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Data Source=localhost\sql2016;Initial Catalog=Test;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{535A311F-A484-49D0-BA13-D662E7FC21BB}"
+      DTS:ObjectName="source_ssas_connection_string">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Data Source=localhost\sql2016;Initial Catalog=AdventureWorksDW2014Multidimensional-EE;Provider=MSOLAP.5;Integrated Security=SSPI;</DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BA88BFAD-BC87-4E1B-BCE1-675B0FC4755F}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="DiscoveryTime">
+      <DTS:VariableValue
+        DTS:DataType="7">7/25/2017 10:10:57 PM</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\ET Get current date and time to use as a key"
+      DTS:CreationName="Microsoft.ExpressionTask"
+      DTS:Description="Expression Task"
+      DTS:DTSID="{2104B7C1-764C-473D-B89C-6AB5C8223E25}"
+      DTS:ExecutableType="Microsoft.ExpressionTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="ET Get current date and time to use as a key"
+      DTS:TaskContact="Expression Task;Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExpressionTask
+          Expression="@[User::DiscoveryTime] =  GETUTCDATE()" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SC Get sessions and connections from SSAS and load into database"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{C6CDC41D-6205-497F-839E-724F761FCBA1}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SC Get sessions and connections from SSAS and load into database">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{AFEAF324-1C8A-449B-8F95-46BDE1CB19FB}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="DFT Get SSAS Connections"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\DC Add current date and time as a key"
+                  componentClassID="Microsoft.DerivedColumn"
+                  contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+                  name="DC Add current date and time as a key"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\DC Add current date and time as a key.Inputs[Derived Column Input]"
+                      description="Input to the Derived Column Transformation"
+                      name="Derived Column Input">
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\DC Add current date and time as a key.Outputs[Derived Column Output]"
+                      description="Default Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      name="Derived Column Output"
+                      synchronousInputId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\DC Add current date and time as a key.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\DC Add current date and time as a key.Outputs[Derived Column Output].Columns[DiscoveryTime]"
+                          dataType="date"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\DC Add current date and time as a key.Outputs[Derived Column Output].Columns[DiscoveryTime]"
+                          name="DiscoveryTime"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">@[User::DiscoveryTime]</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">@[User::DiscoveryTime]</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\DC Add current date and time as a key.Outputs[Derived Column Error Output]"
+                      description="Error Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Derived Column Error Output"
+                      synchronousInputId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\DC Add current date and time as a key.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\DC Add current date and time as a key.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\DC Add current date and time as a key.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\DC Add current date and time as a key.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\DC Add current date and time as a key.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="ODD Destination Database SSASConnectionLog"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[SSASConnectionLog]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[destination_database]"
+                      connectionManagerRefId="Package.ConnectionManagers[destination_database]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].Columns[CONNECTION_ID]"
+                          cachedDataType="i4"
+                          cachedName="CONNECTION_ID"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_ID]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_ID]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].Columns[CONNECTION_USER_NAME]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="CONNECTION_USER_NAME"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_USER_NAME]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_USER_NAME]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].Columns[CONNECTION_IMPERSONATED_USER_NAME]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="CONNECTION_IMPERSONATED_USER_NAME"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_IMPERSONATED_USER_NAME]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_IMPERSONATED_USER_NAME]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].Columns[CONNECTION_HOST_NAME]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="CONNECTION_HOST_NAME"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_HOST_NAME]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_HOST_NAME]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].Columns[CONNECTION_HOST_APPLICATION]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="CONNECTION_HOST_APPLICATION"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_HOST_APPLICATION]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_HOST_APPLICATION]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].Columns[CONNECTION_START_TIME]"
+                          cachedDataType="date"
+                          cachedName="CONNECTION_START_TIME"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_START_TIME]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_START_TIME]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].Columns[CONNECTION_ELAPSED_TIME_MS]"
+                          cachedDataType="i8"
+                          cachedName="CONNECTION_ELAPSED_TIME_MS"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_ELAPSED_TIME_MS]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_ELAPSED_TIME_MS]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].Columns[CONNECTION_LAST_COMMAND_START_TIME]"
+                          cachedDataType="date"
+                          cachedName="CONNECTION_LAST_COMMAND_START_TIME"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_LAST_COMMAND_START_TIME]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_LAST_COMMAND_START_TIME]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].Columns[CONNECTION_LAST_COMMAND_END_TIME]"
+                          cachedDataType="date"
+                          cachedName="CONNECTION_LAST_COMMAND_END_TIME"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_LAST_COMMAND_END_TIME]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_LAST_COMMAND_END_TIME]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].Columns[CONNECTION_LAST_COMMAND_ELAPSED_TIME_MS]"
+                          cachedDataType="i8"
+                          cachedName="CONNECTION_LAST_COMMAND_ELAPSED_TIME_MS"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_LAST_COMMAND_ELAPSED_TIME_MS]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_LAST_COMMAND_ELAPSED_TIME_MS]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].Columns[CONNECTION_IDLE_TIME_MS]"
+                          cachedDataType="i8"
+                          cachedName="CONNECTION_IDLE_TIME_MS"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_IDLE_TIME_MS]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_IDLE_TIME_MS]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].Columns[CONNECTION_BYTES_SENT]"
+                          cachedDataType="i8"
+                          cachedName="CONNECTION_BYTES_SENT"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_BYTES_SENT]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_BYTES_SENT]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].Columns[CONNECTION_DATA_BYTES_SENT]"
+                          cachedDataType="i8"
+                          cachedName="CONNECTION_DATA_BYTES_SENT"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_DATA_BYTES_SENT]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_DATA_BYTES_SENT]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].Columns[CONNECTION_BYTES_RECEIVED]"
+                          cachedDataType="i8"
+                          cachedName="CONNECTION_BYTES_RECEIVED"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_BYTES_RECEIVED]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_BYTES_RECEIVED]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].Columns[CONNECTION_DATA_BYTES_RECEIVED]"
+                          cachedDataType="i8"
+                          cachedName="CONNECTION_DATA_BYTES_RECEIVED"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_DATA_BYTES_RECEIVED]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_DATA_BYTES_RECEIVED]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_ID]"
+                          dataType="i4"
+                          name="CONNECTION_ID" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_USER_NAME]"
+                          dataType="wstr"
+                          length="255"
+                          name="CONNECTION_USER_NAME" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_IMPERSONATED_USER_NAME]"
+                          dataType="wstr"
+                          length="255"
+                          name="CONNECTION_IMPERSONATED_USER_NAME" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_HOST_NAME]"
+                          dataType="wstr"
+                          length="255"
+                          name="CONNECTION_HOST_NAME" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_HOST_APPLICATION]"
+                          dataType="wstr"
+                          length="255"
+                          name="CONNECTION_HOST_APPLICATION" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_START_TIME]"
+                          dataType="dbTimeStamp"
+                          name="CONNECTION_START_TIME" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_ELAPSED_TIME_MS]"
+                          dataType="i8"
+                          name="CONNECTION_ELAPSED_TIME_MS" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_LAST_COMMAND_START_TIME]"
+                          dataType="dbTimeStamp"
+                          name="CONNECTION_LAST_COMMAND_START_TIME" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_LAST_COMMAND_END_TIME]"
+                          dataType="dbTimeStamp"
+                          name="CONNECTION_LAST_COMMAND_END_TIME" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_LAST_COMMAND_ELAPSED_TIME_MS]"
+                          dataType="i8"
+                          name="CONNECTION_LAST_COMMAND_ELAPSED_TIME_MS" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_IDLE_TIME_MS]"
+                          dataType="i8"
+                          name="CONNECTION_IDLE_TIME_MS" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_BYTES_SENT]"
+                          dataType="i8"
+                          name="CONNECTION_BYTES_SENT" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_DATA_BYTES_SENT]"
+                          dataType="i8"
+                          name="CONNECTION_DATA_BYTES_SENT" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_BYTES_RECEIVED]"
+                          dataType="i8"
+                          name="CONNECTION_BYTES_RECEIVED" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[CONNECTION_DATA_BYTES_RECEIVED]"
+                          dataType="i8"
+                          name="CONNECTION_DATA_BYTES_RECEIVED" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input].ExternalColumns[DiscoveryTime]"
+                          dataType="dbTimeStamp"
+                          name="DiscoveryTime" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="ODS SSAS Connections"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset"></property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select CONNECTION_ID ,
+       CONNECTION_USER_NAME ,
+       CONNECTION_IMPERSONATED_USER_NAME ,
+       CONNECTION_HOST_NAME ,
+       CONNECTION_HOST_APPLICATION ,
+       CONNECTION_START_TIME ,
+       CONNECTION_ELAPSED_TIME_MS ,
+       CONNECTION_LAST_COMMAND_START_TIME ,
+       CONNECTION_LAST_COMMAND_END_TIME ,
+       CONNECTION_LAST_COMMAND_ELAPSED_TIME_MS ,
+       CONNECTION_IDLE_TIME_MS ,
+       CONNECTION_BYTES_SENT ,
+       CONNECTION_DATA_BYTES_SENT ,
+       CONNECTION_BYTES_RECEIVED ,
+       CONNECTION_DATA_BYTES_RECEIVED
+from $System.discover_connections;</property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[source_ssas]"
+                      connectionManagerRefId="Package.ConnectionManagers[source_ssas]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_ID]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_ID]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_ID]"
+                          name="CONNECTION_ID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_USER_NAME]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_USER_NAME]"
+                          length="255"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_USER_NAME]"
+                          name="CONNECTION_USER_NAME"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_IMPERSONATED_USER_NAME]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_IMPERSONATED_USER_NAME]"
+                          length="255"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_IMPERSONATED_USER_NAME]"
+                          name="CONNECTION_IMPERSONATED_USER_NAME"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_HOST_NAME]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_HOST_NAME]"
+                          length="255"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_HOST_NAME]"
+                          name="CONNECTION_HOST_NAME"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_HOST_APPLICATION]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_HOST_APPLICATION]"
+                          length="255"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_HOST_APPLICATION]"
+                          name="CONNECTION_HOST_APPLICATION"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_START_TIME]"
+                          dataType="date"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_START_TIME]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_START_TIME]"
+                          name="CONNECTION_START_TIME"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_ELAPSED_TIME_MS]"
+                          dataType="i8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_ELAPSED_TIME_MS]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_ELAPSED_TIME_MS]"
+                          name="CONNECTION_ELAPSED_TIME_MS"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_LAST_COMMAND_START_TIME]"
+                          dataType="date"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_LAST_COMMAND_START_TIME]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_LAST_COMMAND_START_TIME]"
+                          name="CONNECTION_LAST_COMMAND_START_TIME"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_LAST_COMMAND_END_TIME]"
+                          dataType="date"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_LAST_COMMAND_END_TIME]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_LAST_COMMAND_END_TIME]"
+                          name="CONNECTION_LAST_COMMAND_END_TIME"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_LAST_COMMAND_ELAPSED_TIME_MS]"
+                          dataType="i8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_LAST_COMMAND_ELAPSED_TIME_MS]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_LAST_COMMAND_ELAPSED_TIME_MS]"
+                          name="CONNECTION_LAST_COMMAND_ELAPSED_TIME_MS"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_IDLE_TIME_MS]"
+                          dataType="i8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_IDLE_TIME_MS]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_IDLE_TIME_MS]"
+                          name="CONNECTION_IDLE_TIME_MS"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_BYTES_SENT]"
+                          dataType="i8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_BYTES_SENT]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_BYTES_SENT]"
+                          name="CONNECTION_BYTES_SENT"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_DATA_BYTES_SENT]"
+                          dataType="i8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_DATA_BYTES_SENT]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_DATA_BYTES_SENT]"
+                          name="CONNECTION_DATA_BYTES_SENT"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_BYTES_RECEIVED]"
+                          dataType="i8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_BYTES_RECEIVED]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_BYTES_RECEIVED]"
+                          name="CONNECTION_BYTES_RECEIVED"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_DATA_BYTES_RECEIVED]"
+                          dataType="i8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_DATA_BYTES_RECEIVED]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].Columns[CONNECTION_DATA_BYTES_RECEIVED]"
+                          name="CONNECTION_DATA_BYTES_RECEIVED"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_ID]"
+                          dataType="i4"
+                          name="CONNECTION_ID" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_USER_NAME]"
+                          dataType="wstr"
+                          length="255"
+                          name="CONNECTION_USER_NAME" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_IMPERSONATED_USER_NAME]"
+                          dataType="wstr"
+                          length="255"
+                          name="CONNECTION_IMPERSONATED_USER_NAME" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_HOST_NAME]"
+                          dataType="wstr"
+                          length="255"
+                          name="CONNECTION_HOST_NAME" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_HOST_APPLICATION]"
+                          dataType="wstr"
+                          length="255"
+                          name="CONNECTION_HOST_APPLICATION" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_START_TIME]"
+                          dataType="date"
+                          name="CONNECTION_START_TIME" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_ELAPSED_TIME_MS]"
+                          dataType="i8"
+                          name="CONNECTION_ELAPSED_TIME_MS" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_LAST_COMMAND_START_TIME]"
+                          dataType="date"
+                          name="CONNECTION_LAST_COMMAND_START_TIME" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_LAST_COMMAND_END_TIME]"
+                          dataType="date"
+                          name="CONNECTION_LAST_COMMAND_END_TIME" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_LAST_COMMAND_ELAPSED_TIME_MS]"
+                          dataType="i8"
+                          name="CONNECTION_LAST_COMMAND_ELAPSED_TIME_MS" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_IDLE_TIME_MS]"
+                          dataType="i8"
+                          name="CONNECTION_IDLE_TIME_MS" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_BYTES_SENT]"
+                          dataType="i8"
+                          name="CONNECTION_BYTES_SENT" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_DATA_BYTES_SENT]"
+                          dataType="i8"
+                          name="CONNECTION_DATA_BYTES_SENT" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_BYTES_RECEIVED]"
+                          dataType="i8"
+                          name="CONNECTION_BYTES_RECEIVED" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output].ExternalColumns[CONNECTION_DATA_BYTES_RECEIVED]"
+                          dataType="i8"
+                          name="CONNECTION_DATA_BYTES_RECEIVED" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_ID]"
+                          dataType="i4"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_ID]"
+                          name="CONNECTION_ID" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_USER_NAME]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_USER_NAME]"
+                          name="CONNECTION_USER_NAME" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_IMPERSONATED_USER_NAME]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_IMPERSONATED_USER_NAME]"
+                          name="CONNECTION_IMPERSONATED_USER_NAME" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_HOST_NAME]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_HOST_NAME]"
+                          name="CONNECTION_HOST_NAME" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_HOST_APPLICATION]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_HOST_APPLICATION]"
+                          name="CONNECTION_HOST_APPLICATION" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_START_TIME]"
+                          dataType="date"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_START_TIME]"
+                          name="CONNECTION_START_TIME" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_ELAPSED_TIME_MS]"
+                          dataType="i8"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_ELAPSED_TIME_MS]"
+                          name="CONNECTION_ELAPSED_TIME_MS" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_LAST_COMMAND_START_TIME]"
+                          dataType="date"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_LAST_COMMAND_START_TIME]"
+                          name="CONNECTION_LAST_COMMAND_START_TIME" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_LAST_COMMAND_END_TIME]"
+                          dataType="date"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_LAST_COMMAND_END_TIME]"
+                          name="CONNECTION_LAST_COMMAND_END_TIME" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_LAST_COMMAND_ELAPSED_TIME_MS]"
+                          dataType="i8"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_LAST_COMMAND_ELAPSED_TIME_MS]"
+                          name="CONNECTION_LAST_COMMAND_ELAPSED_TIME_MS" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_IDLE_TIME_MS]"
+                          dataType="i8"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_IDLE_TIME_MS]"
+                          name="CONNECTION_IDLE_TIME_MS" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_BYTES_SENT]"
+                          dataType="i8"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_BYTES_SENT]"
+                          name="CONNECTION_BYTES_SENT" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_DATA_BYTES_SENT]"
+                          dataType="i8"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_DATA_BYTES_SENT]"
+                          name="CONNECTION_DATA_BYTES_SENT" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_BYTES_RECEIVED]"
+                          dataType="i8"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_BYTES_RECEIVED]"
+                          name="CONNECTION_BYTES_RECEIVED" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_DATA_BYTES_RECEIVED]"
+                          dataType="i8"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[CONNECTION_DATA_BYTES_RECEIVED]"
+                          name="CONNECTION_DATA_BYTES_RECEIVED" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections.Paths[Derived Column Output]"
+                  endId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog.Inputs[OLE DB Destination Input]"
+                  name="Derived Column Output"
+                  startId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\DC Add current date and time as a key.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections.Paths[OLE DB Source Output]"
+                  endId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\DC Add current date and time as a key.Inputs[Derived Column Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{2D6C7F6D-004D-4820-8974-D4BB9935A3E8}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="DFT Get SSAS Sessions"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\DC Add current date and time as a key"
+                  componentClassID="Microsoft.DerivedColumn"
+                  contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+                  name="DC Add current date and time as a key"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\DC Add current date and time as a key.Inputs[Derived Column Input]"
+                      description="Input to the Derived Column Transformation"
+                      name="Derived Column Input">
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\DC Add current date and time as a key.Outputs[Derived Column Output]"
+                      description="Default Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      name="Derived Column Output"
+                      synchronousInputId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\DC Add current date and time as a key.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\DC Add current date and time as a key.Outputs[Derived Column Output].Columns[DiscoveryTime]"
+                          dataType="date"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\DC Add current date and time as a key.Outputs[Derived Column Output].Columns[DiscoveryTime]"
+                          name="DiscoveryTime"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">@[User::DiscoveryTime]</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">@[User::DiscoveryTime]</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\DC Add current date and time as a key.Outputs[Derived Column Error Output]"
+                      description="Error Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Derived Column Error Output"
+                      synchronousInputId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\DC Add current date and time as a key.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\DC Add current date and time as a key.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\DC Add current date and time as a key.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\DC Add current date and time as a key.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\DC Add current date and time as a key.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="ODD Destination Database SSASSessionLog"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[SSASSessionLog]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[destination_database]"
+                      connectionManagerRefId="Package.ConnectionManagers[destination_database]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].Columns[SESSION_ID]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="SESSION_ID"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_ID]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_ID]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].Columns[SESSION_SPID]"
+                          cachedDataType="i4"
+                          cachedName="SESSION_SPID"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_SPID]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_SPID]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].Columns[SESSION_CONNECTION_ID]"
+                          cachedDataType="i4"
+                          cachedName="SESSION_CONNECTION_ID"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_CONNECTION_ID]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_CONNECTION_ID]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].Columns[SESSION_USER_NAME]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="SESSION_USER_NAME"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_USER_NAME]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_USER_NAME]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].Columns[SESSION_CURRENT_DATABASE]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="SESSION_CURRENT_DATABASE"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_CURRENT_DATABASE]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_CURRENT_DATABASE]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].Columns[SESSION_USED_MEMORY]"
+                          cachedDataType="i4"
+                          cachedName="SESSION_USED_MEMORY"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_USED_MEMORY]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_USED_MEMORY]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].Columns[SESSION_PROPERTIES]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="SESSION_PROPERTIES"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_PROPERTIES]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_PROPERTIES]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].Columns[SESSION_START_TIME]"
+                          cachedDataType="date"
+                          cachedName="SESSION_START_TIME"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_START_TIME]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_START_TIME]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].Columns[SESSION_ELAPSED_TIME_MS]"
+                          cachedDataType="ui8"
+                          cachedName="SESSION_ELAPSED_TIME_MS"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_ELAPSED_TIME_MS]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_ELAPSED_TIME_MS]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].Columns[SESSION_LAST_COMMAND_START_TIME]"
+                          cachedDataType="date"
+                          cachedName="SESSION_LAST_COMMAND_START_TIME"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_LAST_COMMAND_START_TIME]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_LAST_COMMAND_START_TIME]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].Columns[SESSION_LAST_COMMAND_END_TIME]"
+                          cachedDataType="date"
+                          cachedName="SESSION_LAST_COMMAND_END_TIME"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_LAST_COMMAND_END_TIME]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_LAST_COMMAND_END_TIME]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].Columns[SESSION_LAST_COMMAND_ELAPSED_TIME_MS]"
+                          cachedDataType="ui8"
+                          cachedName="SESSION_LAST_COMMAND_ELAPSED_TIME_MS"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_LAST_COMMAND_ELAPSED_TIME_MS]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_LAST_COMMAND_ELAPSED_TIME_MS]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].Columns[SESSION_IDLE_TIME_MS]"
+                          cachedDataType="ui8"
+                          cachedName="SESSION_IDLE_TIME_MS"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_IDLE_TIME_MS]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_IDLE_TIME_MS]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].Columns[SESSION_CPU_TIME_MS]"
+                          cachedDataType="ui8"
+                          cachedName="SESSION_CPU_TIME_MS"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_CPU_TIME_MS]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_CPU_TIME_MS]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].Columns[SESSION_LAST_COMMAND_CPU_TIME_MS]"
+                          cachedDataType="ui8"
+                          cachedName="SESSION_LAST_COMMAND_CPU_TIME_MS"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_LAST_COMMAND_CPU_TIME_MS]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_LAST_COMMAND_CPU_TIME_MS]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].Columns[SESSION_STATUS]"
+                          cachedDataType="i4"
+                          cachedName="SESSION_STATUS"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_STATUS]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_STATUS]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].Columns[SESSION_READS]"
+                          cachedDataType="ui8"
+                          cachedName="SESSION_READS"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_READS]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_READS]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].Columns[SESSION_WRITES]"
+                          cachedDataType="ui8"
+                          cachedName="SESSION_WRITES"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_WRITES]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_WRITES]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].Columns[SESSION_READ_KB]"
+                          cachedDataType="ui8"
+                          cachedName="SESSION_READ_KB"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_READ_KB]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_READ_KB]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].Columns[SESSION_WRITE_KB]"
+                          cachedDataType="ui8"
+                          cachedName="SESSION_WRITE_KB"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_WRITE_KB]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_WRITE_KB]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].Columns[SESSION_COMMAND_COUNT]"
+                          cachedDataType="i4"
+                          cachedName="SESSION_COMMAND_COUNT"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_COMMAND_COUNT]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_COMMAND_COUNT]" />
+                        <inputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].Columns[DiscoveryTime]"
+                          cachedDataType="date"
+                          cachedName="DiscoveryTime"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[DiscoveryTime]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\DC Add current date and time as a key.Outputs[Derived Column Output].Columns[DiscoveryTime]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_ID]"
+                          dataType="wstr"
+                          length="255"
+                          name="SESSION_ID" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_SPID]"
+                          dataType="i4"
+                          name="SESSION_SPID" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_CONNECTION_ID]"
+                          dataType="i4"
+                          name="SESSION_CONNECTION_ID" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_USER_NAME]"
+                          dataType="wstr"
+                          length="255"
+                          name="SESSION_USER_NAME" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_CURRENT_DATABASE]"
+                          dataType="wstr"
+                          length="255"
+                          name="SESSION_CURRENT_DATABASE" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_USED_MEMORY]"
+                          dataType="i4"
+                          name="SESSION_USED_MEMORY" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_PROPERTIES]"
+                          dataType="wstr"
+                          length="255"
+                          name="SESSION_PROPERTIES" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_START_TIME]"
+                          dataType="dbTimeStamp"
+                          name="SESSION_START_TIME" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_ELAPSED_TIME_MS]"
+                          dataType="numeric"
+                          name="SESSION_ELAPSED_TIME_MS"
+                          precision="20" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_LAST_COMMAND_START_TIME]"
+                          dataType="dbTimeStamp"
+                          name="SESSION_LAST_COMMAND_START_TIME" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_LAST_COMMAND_END_TIME]"
+                          dataType="dbTimeStamp"
+                          name="SESSION_LAST_COMMAND_END_TIME" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_LAST_COMMAND_ELAPSED_TIME_MS]"
+                          dataType="numeric"
+                          name="SESSION_LAST_COMMAND_ELAPSED_TIME_MS"
+                          precision="20" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_IDLE_TIME_MS]"
+                          dataType="numeric"
+                          name="SESSION_IDLE_TIME_MS"
+                          precision="20" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_CPU_TIME_MS]"
+                          dataType="numeric"
+                          name="SESSION_CPU_TIME_MS"
+                          precision="20" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_LAST_COMMAND_CPU_TIME_MS]"
+                          dataType="numeric"
+                          name="SESSION_LAST_COMMAND_CPU_TIME_MS"
+                          precision="20" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_STATUS]"
+                          dataType="i4"
+                          name="SESSION_STATUS" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_READS]"
+                          dataType="numeric"
+                          name="SESSION_READS"
+                          precision="20" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_WRITES]"
+                          dataType="numeric"
+                          name="SESSION_WRITES"
+                          precision="20" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_READ_KB]"
+                          dataType="numeric"
+                          name="SESSION_READ_KB"
+                          precision="20" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_WRITE_KB]"
+                          dataType="numeric"
+                          name="SESSION_WRITE_KB"
+                          precision="20" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[SESSION_COMMAND_COUNT]"
+                          dataType="i4"
+                          name="SESSION_COMMAND_COUNT" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input].ExternalColumns[DiscoveryTime]"
+                          dataType="dbTimeStamp"
+                          name="DiscoveryTime" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="ODS SSAS Sessions"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset"></property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">Select  
+SESSION_ID ,
+       SESSION_SPID ,
+       SESSION_CONNECTION_ID ,
+       SESSION_USER_NAME ,
+       SESSION_CURRENT_DATABASE ,
+       SESSION_USED_MEMORY ,
+       SESSION_PROPERTIES ,
+       SESSION_START_TIME ,
+       SESSION_ELAPSED_TIME_MS ,
+       SESSION_LAST_COMMAND_START_TIME ,
+       SESSION_LAST_COMMAND_END_TIME ,
+       SESSION_LAST_COMMAND_ELAPSED_TIME_MS ,
+       SESSION_IDLE_TIME_MS ,
+       SESSION_CPU_TIME_MS ,
+       SESSION_LAST_COMMAND_CPU_TIME_MS ,
+       SESSION_STATUS ,
+       SESSION_READS ,
+       SESSION_WRITES ,
+       SESSION_READ_KB ,
+       SESSION_WRITE_KB ,
+       SESSION_COMMAND_COUNT
+ from $System.discover_sessions;</property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[source_ssas]"
+                      connectionManagerRefId="Package.ConnectionManagers[source_ssas]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_ID]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_ID]"
+                          length="255"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_ID]"
+                          name="SESSION_ID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_SPID]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_SPID]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_SPID]"
+                          name="SESSION_SPID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_CONNECTION_ID]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_CONNECTION_ID]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_CONNECTION_ID]"
+                          name="SESSION_CONNECTION_ID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_USER_NAME]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_USER_NAME]"
+                          length="255"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_USER_NAME]"
+                          name="SESSION_USER_NAME"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_CURRENT_DATABASE]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_CURRENT_DATABASE]"
+                          length="255"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_CURRENT_DATABASE]"
+                          name="SESSION_CURRENT_DATABASE"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_USED_MEMORY]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_USED_MEMORY]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_USED_MEMORY]"
+                          name="SESSION_USED_MEMORY"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_PROPERTIES]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_PROPERTIES]"
+                          length="255"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_PROPERTIES]"
+                          name="SESSION_PROPERTIES"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_START_TIME]"
+                          dataType="date"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_START_TIME]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_START_TIME]"
+                          name="SESSION_START_TIME"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_ELAPSED_TIME_MS]"
+                          dataType="ui8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_ELAPSED_TIME_MS]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_ELAPSED_TIME_MS]"
+                          name="SESSION_ELAPSED_TIME_MS"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_LAST_COMMAND_START_TIME]"
+                          dataType="date"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_LAST_COMMAND_START_TIME]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_LAST_COMMAND_START_TIME]"
+                          name="SESSION_LAST_COMMAND_START_TIME"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_LAST_COMMAND_END_TIME]"
+                          dataType="date"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_LAST_COMMAND_END_TIME]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_LAST_COMMAND_END_TIME]"
+                          name="SESSION_LAST_COMMAND_END_TIME"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_LAST_COMMAND_ELAPSED_TIME_MS]"
+                          dataType="ui8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_LAST_COMMAND_ELAPSED_TIME_MS]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_LAST_COMMAND_ELAPSED_TIME_MS]"
+                          name="SESSION_LAST_COMMAND_ELAPSED_TIME_MS"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_IDLE_TIME_MS]"
+                          dataType="ui8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_IDLE_TIME_MS]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_IDLE_TIME_MS]"
+                          name="SESSION_IDLE_TIME_MS"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_CPU_TIME_MS]"
+                          dataType="ui8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_CPU_TIME_MS]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_CPU_TIME_MS]"
+                          name="SESSION_CPU_TIME_MS"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_LAST_COMMAND_CPU_TIME_MS]"
+                          dataType="ui8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_LAST_COMMAND_CPU_TIME_MS]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_LAST_COMMAND_CPU_TIME_MS]"
+                          name="SESSION_LAST_COMMAND_CPU_TIME_MS"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_STATUS]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_STATUS]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_STATUS]"
+                          name="SESSION_STATUS"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_READS]"
+                          dataType="ui8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_READS]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_READS]"
+                          name="SESSION_READS"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_WRITES]"
+                          dataType="ui8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_WRITES]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_WRITES]"
+                          name="SESSION_WRITES"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_READ_KB]"
+                          dataType="ui8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_READ_KB]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_READ_KB]"
+                          name="SESSION_READ_KB"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_WRITE_KB]"
+                          dataType="ui8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_WRITE_KB]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_WRITE_KB]"
+                          name="SESSION_WRITE_KB"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_COMMAND_COUNT]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_COMMAND_COUNT]"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].Columns[SESSION_COMMAND_COUNT]"
+                          name="SESSION_COMMAND_COUNT"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_ID]"
+                          dataType="wstr"
+                          length="255"
+                          name="SESSION_ID" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_SPID]"
+                          dataType="i4"
+                          name="SESSION_SPID" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_CONNECTION_ID]"
+                          dataType="i4"
+                          name="SESSION_CONNECTION_ID" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_USER_NAME]"
+                          dataType="wstr"
+                          length="255"
+                          name="SESSION_USER_NAME" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_CURRENT_DATABASE]"
+                          dataType="wstr"
+                          length="255"
+                          name="SESSION_CURRENT_DATABASE" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_USED_MEMORY]"
+                          dataType="i4"
+                          name="SESSION_USED_MEMORY" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_PROPERTIES]"
+                          dataType="wstr"
+                          length="255"
+                          name="SESSION_PROPERTIES" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_START_TIME]"
+                          dataType="date"
+                          name="SESSION_START_TIME" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_ELAPSED_TIME_MS]"
+                          dataType="ui8"
+                          name="SESSION_ELAPSED_TIME_MS" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_LAST_COMMAND_START_TIME]"
+                          dataType="date"
+                          name="SESSION_LAST_COMMAND_START_TIME" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_LAST_COMMAND_END_TIME]"
+                          dataType="date"
+                          name="SESSION_LAST_COMMAND_END_TIME" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_LAST_COMMAND_ELAPSED_TIME_MS]"
+                          dataType="ui8"
+                          name="SESSION_LAST_COMMAND_ELAPSED_TIME_MS" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_IDLE_TIME_MS]"
+                          dataType="ui8"
+                          name="SESSION_IDLE_TIME_MS" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_CPU_TIME_MS]"
+                          dataType="ui8"
+                          name="SESSION_CPU_TIME_MS" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_LAST_COMMAND_CPU_TIME_MS]"
+                          dataType="ui8"
+                          name="SESSION_LAST_COMMAND_CPU_TIME_MS" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_STATUS]"
+                          dataType="i4"
+                          name="SESSION_STATUS" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_READS]"
+                          dataType="ui8"
+                          name="SESSION_READS" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_WRITES]"
+                          dataType="ui8"
+                          name="SESSION_WRITES" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_READ_KB]"
+                          dataType="ui8"
+                          name="SESSION_READ_KB" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_WRITE_KB]"
+                          dataType="ui8"
+                          name="SESSION_WRITE_KB" />
+                        <externalMetadataColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output].ExternalColumns[SESSION_COMMAND_COUNT]"
+                          dataType="i4"
+                          name="SESSION_COMMAND_COUNT" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_ID]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_ID]"
+                          name="SESSION_ID" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_SPID]"
+                          dataType="i4"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_SPID]"
+                          name="SESSION_SPID" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_CONNECTION_ID]"
+                          dataType="i4"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_CONNECTION_ID]"
+                          name="SESSION_CONNECTION_ID" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_USER_NAME]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_USER_NAME]"
+                          name="SESSION_USER_NAME" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_CURRENT_DATABASE]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_CURRENT_DATABASE]"
+                          name="SESSION_CURRENT_DATABASE" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_USED_MEMORY]"
+                          dataType="i4"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_USED_MEMORY]"
+                          name="SESSION_USED_MEMORY" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_PROPERTIES]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_PROPERTIES]"
+                          name="SESSION_PROPERTIES" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_START_TIME]"
+                          dataType="date"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_START_TIME]"
+                          name="SESSION_START_TIME" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_ELAPSED_TIME_MS]"
+                          dataType="ui8"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_ELAPSED_TIME_MS]"
+                          name="SESSION_ELAPSED_TIME_MS" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_LAST_COMMAND_START_TIME]"
+                          dataType="date"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_LAST_COMMAND_START_TIME]"
+                          name="SESSION_LAST_COMMAND_START_TIME" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_LAST_COMMAND_END_TIME]"
+                          dataType="date"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_LAST_COMMAND_END_TIME]"
+                          name="SESSION_LAST_COMMAND_END_TIME" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_LAST_COMMAND_ELAPSED_TIME_MS]"
+                          dataType="ui8"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_LAST_COMMAND_ELAPSED_TIME_MS]"
+                          name="SESSION_LAST_COMMAND_ELAPSED_TIME_MS" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_IDLE_TIME_MS]"
+                          dataType="ui8"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_IDLE_TIME_MS]"
+                          name="SESSION_IDLE_TIME_MS" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_CPU_TIME_MS]"
+                          dataType="ui8"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_CPU_TIME_MS]"
+                          name="SESSION_CPU_TIME_MS" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_LAST_COMMAND_CPU_TIME_MS]"
+                          dataType="ui8"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_LAST_COMMAND_CPU_TIME_MS]"
+                          name="SESSION_LAST_COMMAND_CPU_TIME_MS" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_STATUS]"
+                          dataType="i4"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_STATUS]"
+                          name="SESSION_STATUS" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_READS]"
+                          dataType="ui8"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_READS]"
+                          name="SESSION_READS" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_WRITES]"
+                          dataType="ui8"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_WRITES]"
+                          name="SESSION_WRITES" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_READ_KB]"
+                          dataType="ui8"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_READ_KB]"
+                          name="SESSION_READ_KB" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_WRITE_KB]"
+                          dataType="ui8"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_WRITE_KB]"
+                          name="SESSION_WRITE_KB" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_COMMAND_COUNT]"
+                          dataType="i4"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[SESSION_COMMAND_COUNT]"
+                          name="SESSION_COMMAND_COUNT" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions.Paths[Derived Column Output]"
+                  endId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog.Inputs[OLE DB Destination Input]"
+                  name="Derived Column Output"
+                  startId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\DC Add current date and time as a key.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions.Paths[OLE DB Source Output]"
+                  endId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\DC Add current date and time as a key.Inputs[Derived Column Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\SC Get sessions and connections from SSAS and load into database.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{D1BA1BF6-5177-4630-BDD7-C6756ABF5864}"
+          DTS:From="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{D145036F-24A5-4F1E-BFB6-343CD3889698}"
+      DTS:From="Package\ET Get current date and time to use as a key"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\SC Get sessions and connections from SSAS and load into database" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="291,42"
+          Id="Package\ET Get current date and time to use as a key"
+          TopLeft="158.5,69.5" />
+        <NodeLayout
+          Size="206,42"
+          Id="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections"
+          TopLeft="5.50000000000001,5.5" />
+        <NodeLayout
+          Size="189,42"
+          Id="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions"
+          TopLeft="14,107.5" />
+        <EdgeLayout
+          Id="Package\SC Get sessions and connections from SSAS and load into database.PrecedenceConstraints[Constraint]"
+          TopLeft="108.5,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="217,204"
+          Size="217,248"
+          Id="Package\SC Get sessions and connections from SSAS and load into database"
+          TopLeft="195.5,171.5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="304,111.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="188,42"
+          Id="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections"
+          TopLeft="188,106.5" />
+        <NodeLayout
+          Size="262,42"
+          Id="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\DC Add current date and time as a key"
+          TopLeft="151,208.5" />
+        <EdgeLayout
+          Id="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections.Paths[OLE DB Source Output]"
+          TopLeft="282,148.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="301,42"
+          Id="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog"
+          TopLeft="131.5,310.5" />
+        <EdgeLayout
+          Id="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections.Paths[Derived Column Output]"
+          TopLeft="282,250.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="171,42"
+          Id="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions"
+          TopLeft="199,112.5" />
+        <NodeLayout
+          Size="284,42"
+          Id="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog"
+          TopLeft="142.5,316.5" />
+        <NodeLayout
+          Size="262,42"
+          Id="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\DC Add current date and time as a key"
+          TopLeft="153.5,214.5" />
+        <EdgeLayout
+          Id="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions.Paths[OLE DB Source Output]"
+          TopLeft="284.5,154.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions.Paths[Derived Column Output]"
+          TopLeft="284.5,256.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODS SSAS Connections">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Connections\ODD Destination Database SSASConnectionLog">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODS SSAS Sessions">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\SC Get sessions and connections from SSAS and load into database\DFT Get SSAS Sessions\ODD Destination Database SSASSessionLog">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
