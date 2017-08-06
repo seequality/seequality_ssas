@@ -14,10 +14,11 @@ namespace ssas_toolbox_console
         static void Main(string[] args)
         {
             // get parameter values form app.config
-            string SSASConnectionString = ConfigurationManager.AppSettings["SSASConnectionString"];
+            string SSASConnectionString = "";
             string OutputFolderPath = ConfigurationManager.AppSettings["OutputFolderPath"];
             bool OverwriteOutputFile = Convert.ToBoolean(ConfigurationManager.AppSettings["OverwriteOutputFile"]);
 
+            string useConfig = "";
             string nSwitch = null;
             string databaseName = null;
             string cubeName = null;
@@ -28,7 +29,29 @@ namespace ssas_toolbox_console
             string currentMethodName = "";
             bool error = false;
 
+            Console.Write("Do you want to use the config file (y) or overwrite SSAS connection string (n)?: ");
+            useConfig = Console.ReadLine();
+
+            if (useConfig == "y")
+            {
+                SSASConnectionString = ConfigurationManager.AppSettings["SSASConnectionString"];
+            }
+            else if (useConfig == "n")
+            {
+                Console.Write("Provide the SSAS machine name and instance name ex: localhost\\myinstance: ");
+                string instance = Console.ReadLine();
+                Console.Write("Provide the SSAS database name: ");
+                string database = Console.ReadLine();
+                SSASConnectionString = "Data source=" + instance + ";Database=" + database;
+            }
+            else
+            {
+                SSASConnectionString = ConfigurationManager.AppSettings["SSASConnectionString"];
+                Console.WriteLine("The input was not correct. The configuration file will be used.");
+            }
+
             // Display menu
+            Console.WriteLine("\n");
             Console.WriteLine("0.  Exit");
             Console.WriteLine("1.  Discover databases processing states");
             Console.WriteLine("2.  Discover dimensions processing states");
@@ -129,7 +152,7 @@ namespace ssas_toolbox_console
                 }
                 catch (Exception exc)
                 {
-                    Console.WriteLine(exc.Message + ", " + exc.InnerException);
+                    Console.WriteLine(exc.Message + "\n\n\n" + exc.InnerException);
                     error = true;
                 }
 
