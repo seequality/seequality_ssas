@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ssas_toolbox_library;
+using System.IO;
 
 namespace ssas_toolbox_console
 {
@@ -22,6 +23,10 @@ namespace ssas_toolbox_console
             string cubeName = null;
             string measureGroupName = null;
             string roleName = null;
+            string output = "";
+            string currentFileName = "";
+            string currentMethodName = "";
+            bool error = false;
 
             // Display menu
             Console.WriteLine("0.  Exit");
@@ -37,6 +42,7 @@ namespace ssas_toolbox_console
             Console.WriteLine("7a. Discover roles permissions");
             Console.WriteLine("7b. Discover roles permissions - specify database and role name");
 
+
             // Initialize 
             SSASDiscover ssasDiscover = new SSASDiscover();
             ssasDiscover.OutputFolderPath = OutputFolderPath;
@@ -46,75 +52,100 @@ namespace ssas_toolbox_console
             do
             {
 
+                error = false;
                 Console.Write("\nType the option: ");
                 nSwitch = Console.ReadLine();
 
-                switch (nSwitch)
+                try
                 {
-                    case "0":
-                        break;
-                    case "1":
-                        ssasDiscover.DatabaseState();
-                        Console.Write("Done, check log directories for details.\n");
-                        break;
-                    case "2":
-                        ssasDiscover.DatabaseDimensionState();
-                        Console.Write("Done, check log directories for details.\n");
-                        break;
-                    case "3":
-                        ssasDiscover.CubeState();
-                        Console.Write("Done, check log directories for details.\n");
-                        break;
-                    case "4":
-                        ssasDiscover.MeasureGroupState();
-                        Console.Write("Done, check log directories for details.\n");
-                        break;
-                    case "5a":
-                        ssasDiscover.PartitionState();
-                        Console.Write("Done, check log directories for details.\n");
-                        break;
-                    case "5b":
-                        ssasDiscover.PartitionState(true);
-                        Console.Write("Done, check log directories for details.\n");
-                        break;
-                    case "5c":
-                        Console.Write("Type the database name: ");
-                        databaseName = Console.ReadLine();
-                        Console.Write("Type the cube name: ");
-                        cubeName = Console.ReadLine();
-                        Console.Write("Type the measure group name: ");
-                        measureGroupName = Console.ReadLine();
-                        ssasDiscover.PartitionState(databaseName, cubeName, measureGroupName);
-                        Console.Write("Done, check log directories for details.\n");
-                        break;
-                    case "6a":
-                        ssasDiscover.RoleUsers();
-                        Console.Write("Done, check log directories for details.\n");
-                        break;
-                    case "6b":
-                        Console.Write("Type the database name: ");
-                        databaseName = Console.ReadLine();
-                        Console.Write("Type the role name: ");
-                        roleName = Console.ReadLine();
-                        ssasDiscover.RoleUsers(databaseName, roleName);
-                        Console.Write("Done, check log directories for details.\n");
-                        break;
-                    case "7a":
-                        ssasDiscover.RolePermissions();
-                        Console.Write("Done, check log directories for details.\n");
-                        break;
-                    case "7b":
-                        Console.Write("Type the database name: ");
-                        databaseName = Console.ReadLine();
-                        Console.Write("Type the role name: ");
-                        roleName = Console.ReadLine();
-                        ssasDiscover.RolePermissions(databaseName, roleName);
-                        Console.Write("Done, check log directories for details.\n");
-                        break;
+                    switch (nSwitch)
+                    {
+                        case "0":
+                            break;
+                        case "1":
+                            currentMethodName = "DatabaseState";
+                            output = ssasDiscover.DatabaseState();
+                            break;
+                        case "2":
+                            currentMethodName = "DatabaseDimensionState";
+                            output = ssasDiscover.DatabaseDimensionState();
+                            break;
+                        case "3":
+                            currentMethodName = "CubeState";
+                            output = ssasDiscover.CubeState();
+                            break;
+                        case "4":
+                            currentMethodName = "MeasureGroupState";
+                            output = ssasDiscover.MeasureGroupState();
+                            break;
+                        case "5a":
+                            currentMethodName = "PartitionState";
+                            output = ssasDiscover.PartitionState();
+                            break;
+                        case "5b":
+                            currentMethodName = "PartitionState";
+                            output = ssasDiscover.PartitionState(true);
+                            break;
+                        case "5c":
+                            currentMethodName = "PartitionState";
+                            Console.Write("Type the database name: ");
+                            databaseName = Console.ReadLine();
+                            Console.Write("Type the cube name: ");
+                            cubeName = Console.ReadLine();
+                            Console.Write("Type the measure group name: ");
+                            measureGroupName = Console.ReadLine();
+                            output = ssasDiscover.PartitionState(databaseName, cubeName, measureGroupName);
+                            break;
+                        case "6a":
+                            currentMethodName = "RoleUsers";
+                            ssasDiscover.RoleUsers();
+                            break;
+                        case "6b":
+                            currentMethodName = "RoleUsers";
+                            Console.Write("Type the database name: ");
+                            databaseName = Console.ReadLine();
+                            Console.Write("Type the role name: ");
+                            roleName = Console.ReadLine();
+                            output = ssasDiscover.RoleUsers(databaseName, roleName);
+                            break;
+                        case "7a":
+                            currentMethodName = "RolePermissions";
+                            output = ssasDiscover.RolePermissions();
+                            break;
+                        case "7b":
+                            currentMethodName = "RolePermissions";
+                            Console.Write("Type the database name: ");
+                            databaseName = Console.ReadLine();
+                            Console.Write("Type the role name: ");
+                            roleName = Console.ReadLine();
+                            output = ssasDiscover.RolePermissions(databaseName, roleName);
+                            break;
 
-                    default:
-                        Console.WriteLine("Not implemented");
-                        break;
+                        default:
+                            Console.WriteLine("Not implemented");
+                            error = true;
+                            break;
+                    }
+                }
+                catch (Exception exc)
+                {
+                    Console.WriteLine(exc.Message + ", " + exc.InnerException);
+                    error = true;
+                }
+
+                if (!error)
+                {
+                    if (!OverwriteOutputFile)
+                    {
+                        currentFileName = OutputFolderPath + "ssas_toolset_" + currentMethodName + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
+                    }
+                    else
+                    {
+                        currentFileName = OutputFolderPath + "ssas_toolset_" + currentMethodName + ".txt";
+                    }
+
+                    File.WriteAllText(currentFileName, output.ToString());
+                    Console.Write("Done, check log directories for details.\n");
                 }
 
             } while (nSwitch != "0");
