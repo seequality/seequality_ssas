@@ -16,19 +16,9 @@ namespace ssas_toolbox_library
         public string SSASConnectionString { get; set; }
         public bool OverwriteOutputFile { get; set; }
 
-        public void DatabaseState()
+        public string DatabaseState()
         {
             StringBuilder output = new StringBuilder();
-            string currentFileName = "";
-
-            if (!OverwriteOutputFile)
-            {
-                currentFileName = OutputFolderPath + "ssas_toolset_" + System.Reflection.MethodBase.GetCurrentMethod().Name + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
-            }
-            else
-            {
-                currentFileName = OutputFolderPath + "ssas_toolset_" + System.Reflection.MethodBase.GetCurrentMethod().Name + ".txt";
-            }
 
             Server server;
 
@@ -43,29 +33,20 @@ namespace ssas_toolbox_library
                     output.AppendLine("Discover server: " + SSASConnectionString + ", database: " + database.Name + ", state: " + database.State + ", last processed: " + database.LastProcessed);
                 }
 
+                return output.ToString().Trim();
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine("There was an error: " + ex.Message);
+                throw;
             }
-
-            File.WriteAllText(currentFileName, output.ToString());
 
         }
 
-        public void DatabaseDimensionState()
+        public string DatabaseDimensionState()
         {
             StringBuilder output = new StringBuilder();
-            string currentFileName = "";
 
-            if (!OverwriteOutputFile)
-            {
-                currentFileName = OutputFolderPath + "ssas_toolset_" + System.Reflection.MethodBase.GetCurrentMethod().Name + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
-            }
-            else
-            {
-                currentFileName = OutputFolderPath + "ssas_toolset_" + System.Reflection.MethodBase.GetCurrentMethod().Name + ".txt";
-            }
             Server server;
 
             try
@@ -82,29 +63,20 @@ namespace ssas_toolbox_library
                     }
                 }
 
+                return output.ToString().Trim();
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine("There was an error: " + ex.Message);
+                throw;
             }
-
-            File.WriteAllText(currentFileName, output.ToString());
 
         }
 
-        public void CubeState()
+        public string CubeState()
         {
             StringBuilder output = new StringBuilder();
-            string currentFileName = "";
 
-            if (!OverwriteOutputFile)
-            {
-                currentFileName = OutputFolderPath + "ssas_toolset_" + System.Reflection.MethodBase.GetCurrentMethod().Name + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
-            }
-            else
-            {
-                currentFileName = OutputFolderPath + "ssas_toolset_" + System.Reflection.MethodBase.GetCurrentMethod().Name + ".txt";
-            }
             Server server;
 
             try
@@ -121,29 +93,20 @@ namespace ssas_toolbox_library
                     }
                 }
 
+                return output.ToString().Trim();
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine("There was an error: " + ex.Message);
+                throw;
             }
-
-            File.WriteAllText(currentFileName, output.ToString());
 
         }
 
-        public void MeasureGroupState()
+        public string MeasureGroupState()
         {
             StringBuilder output = new StringBuilder();
-            string currentFileName = "";
 
-            if (!OverwriteOutputFile)
-            {
-                currentFileName = OutputFolderPath + "ssas_toolset_" + System.Reflection.MethodBase.GetCurrentMethod().Name + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
-            }
-            else
-            {
-                currentFileName = OutputFolderPath + "ssas_toolset_" + System.Reflection.MethodBase.GetCurrentMethod().Name + ".txt";
-            }
             Server server;
 
             try
@@ -163,29 +126,20 @@ namespace ssas_toolbox_library
                     }
                 }
 
+                return output.ToString().Trim();
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine("There was an error: " + ex.Message);
+                throw;
             }
-
-            File.WriteAllText(currentFileName, output.ToString());
 
         }
 
-        public void PartitionState()
+        public string PartitionState()
         {
             StringBuilder output = new StringBuilder();
-            string currentFileName = "";
 
-            if (!OverwriteOutputFile)
-            {
-                currentFileName = OutputFolderPath + "ssas_toolset_" + System.Reflection.MethodBase.GetCurrentMethod().Name + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
-            }
-            else
-            {
-                currentFileName = OutputFolderPath + "ssas_toolset_" + System.Reflection.MethodBase.GetCurrentMethod().Name + ".txt";
-            }
             Server server;
 
             try
@@ -208,29 +162,19 @@ namespace ssas_toolbox_library
                     }
                 }
 
+                return output.ToString().Trim();
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine("There was an error: " + ex.Message);
+                throw;
             }
-
-            File.WriteAllText(currentFileName, output.ToString());
-
         }
 
-        public void PartitionState(bool UnprocessedOnly)
+        public string PartitionState(bool UnprocessedOnly)
         {
             StringBuilder output = new StringBuilder();
-            string currentFileName = "";
 
-            if (!OverwriteOutputFile)
-            {
-                currentFileName = OutputFolderPath + "ssas_toolset_" + System.Reflection.MethodBase.GetCurrentMethod().Name + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
-            }
-            else
-            {
-                currentFileName = OutputFolderPath + "ssas_toolset_" + System.Reflection.MethodBase.GetCurrentMethod().Name + ".txt";
-            }
             Server server;
 
             try
@@ -256,29 +200,20 @@ namespace ssas_toolbox_library
                     }
                 }
 
+                return output.ToString().Trim();
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine("There was an error: " + ex.Message);
+                throw;
             }
-
-            File.WriteAllText(currentFileName, output.ToString());
 
         }
 
-        public void PartitionState(string DatabaseName, string CubeName, string MeasureGroupName)
+        public string PartitionState(string DatabaseName, string CubeName, string MeasureGroupName)
         {
             StringBuilder output = new StringBuilder();
-            string currentFileName = "";
 
-            if (!OverwriteOutputFile)
-            {
-                currentFileName = OutputFolderPath + "ssas_toolset_" + System.Reflection.MethodBase.GetCurrentMethod().Name + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
-            }
-            else
-            {
-                currentFileName = OutputFolderPath + "ssas_toolset_" + System.Reflection.MethodBase.GetCurrentMethod().Name + ".txt";
-            }
             Server server;
 
             try
@@ -296,29 +231,20 @@ namespace ssas_toolbox_library
                     output.AppendLine("Discover server: " + SSASConnectionString + ", database: " + database.Name + ", cube: " + cube.Name + ", measure group: " + measureGroup.Name + ", partition: " + partition.Name + ", state: " + partition.State + ", last processed: " + partition.LastProcessed);
                 }
 
+                return output.ToString().Trim();
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine("There was an error: " + ex.Message);
+                throw;
             }
-
-            File.WriteAllText(currentFileName, output.ToString());
 
         }
 
-        public void RoleUsers()
+        public string RoleUsers()
         {
             StringBuilder output = new StringBuilder();
-            string currentFileName = "";
 
-            if (!OverwriteOutputFile)
-            {
-                currentFileName = OutputFolderPath + "ssas_toolset_" + System.Reflection.MethodBase.GetCurrentMethod().Name + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
-            }
-            else
-            {
-                currentFileName = OutputFolderPath + "ssas_toolset_" + System.Reflection.MethodBase.GetCurrentMethod().Name + ".txt";
-            }
             Server server;
 
             try
@@ -338,28 +264,19 @@ namespace ssas_toolbox_library
                     }
                 }
 
+                return output.ToString().Trim();
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine("There was an error: " + ex.Message);
+                throw;
             }
-
-            File.WriteAllText(currentFileName, output.ToString());
 
         }
-        public void RoleUsers(string DatabaseName, string RoleName)
+        public string RoleUsers(string DatabaseName, string RoleName)
         {
             StringBuilder output = new StringBuilder();
-            string currentFileName = "";
 
-            if (!OverwriteOutputFile)
-            {
-                currentFileName = OutputFolderPath + "ssas_toolset_" + System.Reflection.MethodBase.GetCurrentMethod().Name + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
-            }
-            else
-            {
-                currentFileName = OutputFolderPath + "ssas_toolset_" + System.Reflection.MethodBase.GetCurrentMethod().Name + ".txt";
-            }
             Server server;
 
             try
@@ -376,29 +293,20 @@ namespace ssas_toolbox_library
                     output.AppendLine("Discover server: " + SSASConnectionString + ", database: " + database.Name + ", role: " + role.Name + ", member: " + roleMember.Name);
                 }
 
+                return output.ToString().Trim();
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine("There was an error: " + ex.Message);
+                throw;
             }
-
-            File.WriteAllText(currentFileName, output.ToString());
 
         }
 
-        public void RolePermissions()
+        public string RolePermissions()
         {
             StringBuilder output = new StringBuilder();
-            string currentFileName = "";
 
-            if (!OverwriteOutputFile)
-            {
-                currentFileName = OutputFolderPath + "ssas_toolset_" + System.Reflection.MethodBase.GetCurrentMethod().Name + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
-            }
-            else
-            {
-                currentFileName = OutputFolderPath + "ssas_toolset_" + System.Reflection.MethodBase.GetCurrentMethod().Name + ".txt";
-            }
             Server server;
 
             try
@@ -425,29 +333,20 @@ namespace ssas_toolbox_library
                 }
 
 
+                return output.ToString().Trim();
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine("There was an error: " + ex.Message);
+                throw;
             }
-
-            File.WriteAllText(currentFileName, output.ToString());
 
         }
 
-        public void RolePermissions(string DatabaseName, string RoleName)
+        public string RolePermissions(string DatabaseName, string RoleName)
         {
             StringBuilder output = new StringBuilder();
-            string currentFileName = "";
 
-            if (!OverwriteOutputFile)
-            {
-                currentFileName = OutputFolderPath + "ssas_toolset_" + System.Reflection.MethodBase.GetCurrentMethod().Name + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
-            }
-            else
-            {
-                currentFileName = OutputFolderPath + "ssas_toolset_" + System.Reflection.MethodBase.GetCurrentMethod().Name + ".txt";
-            }
             Server server;
 
             try
@@ -476,14 +375,14 @@ namespace ssas_toolbox_library
                 }
 
 
+                return output.ToString().Trim();
 
             }
             catch (Exception ex)
             {
-                Console.WriteLine("There was an error: " + ex.Message);
+                throw;
             }
 
-            File.WriteAllText(currentFileName, output.ToString());
 
         }
     }
